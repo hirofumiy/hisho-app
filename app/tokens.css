@@ -1,0 +1,99 @@
+/* Hallmark · tokens · 秘書室 (hisho-app)
+ * theme: custom "calm sakura" · paper light(warm) · display italic/serif-mincho · accent warm-rose
+ */
+:root {
+  /* ---- paper / ink (warm light) ---- */
+  --color-paper:    oklch(98.6% 0.006 60);
+  --color-paper-2:  oklch(96.6% 0.008 60);   /* cards */
+  --color-paper-3:  oklch(93.2% 0.010 60);   /* hover / elevated */
+  --color-ink:      oklch(27% 0.014 40);     /* primary text */
+  --color-ink-2:    oklch(44% 0.014 40);     /* secondary */
+  --color-ink-3:    oklch(60% 0.012 40);     /* muted / meta */
+  --color-line:     oklch(89% 0.008 60);     /* hairline */
+  --color-line-2:   oklch(83% 0.010 60);     /* stronger rule */
+
+  /* ---- accent (sakura rose) ---- */
+  --color-accent:       oklch(60% 0.125 12);
+  --color-accent-deep:  oklch(50% 0.135 12);
+  --color-accent-soft:  oklch(94.5% 0.035 12);
+  --color-on-accent:    oklch(99% 0.004 60);
+
+  /* ---- semantic ---- */
+  --color-amber:    oklch(72% 0.125 72);     /* mid priority */
+  --color-done:     oklch(60% 0.105 150);    /* completed green */
+  --color-done-soft:oklch(94% 0.045 150);
+  --color-danger:   oklch(55% 0.18 25);
+  --color-danger-soft: oklch(95% 0.04 25);
+  --color-focus:    oklch(55% 0.16 250);     /* cool focus ring */
+
+  /* ---- type ---- */
+  --font-display: "Zen Old Mincho", "Hiragino Mincho ProN", serif;
+  --font-body: "Zen Kaku Gothic New", "Hiragino Sans", "Hiragino Kaku Gothic ProN", system-ui, sans-serif;
+  --font-mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --text-xs:   0.75rem;
+  --text-sm:   0.8125rem;
+  --text-base: 0.9375rem;
+  --text-md:   1.0625rem;
+  --text-lg:   1.25rem;
+  --text-xl:   1.5rem;
+  --text-2xl:  1.9375rem;
+
+  /* ---- spacing (4pt) ---- */
+  --space-2:  0.125rem;
+  --space-4:  0.25rem;
+  --space-6:  0.375rem;
+  --space-8:  0.5rem;
+  --space-12: 0.75rem;
+  --space-16: 1rem;
+  --space-20: 1.25rem;
+  --space-24: 1.5rem;
+  --space-32: 2rem;
+  --space-48: 3rem;
+
+  /* ---- radius / depth ---- */
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+  --radius-pill: 999px;
+  --shadow-1: 0 1px 2px oklch(27% 0.014 40 / 0.05), 0 2px 8px oklch(27% 0.014 40 / 0.04);
+  --shadow-2: 0 6px 24px oklch(27% 0.014 40 / 0.10);
+
+  /* ---- motion ---- */
+  --dur-fast: 120ms;
+  --dur-mid:  220ms;
+  --dur-slow: 340ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in:  cubic-bezier(0.4, 0, 1, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+
+  --tap: 44px; /* minimum tap target */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-paper:    oklch(20% 0.010 50);
+    --color-paper-2:  oklch(24% 0.012 50);
+    --color-paper-3:  oklch(29% 0.014 50);
+    --color-ink:      oklch(94% 0.008 60);
+    --color-ink-2:    oklch(78% 0.010 60);
+    --color-ink-3:    oklch(64% 0.010 60);
+    --color-line:     oklch(34% 0.012 50);
+    --color-line-2:   oklch(40% 0.014 50);
+
+    --color-accent:      oklch(72% 0.125 14);
+    --color-accent-deep: oklch(80% 0.120 14);
+    --color-accent-soft: oklch(33% 0.060 14);
+    --color-on-accent:   oklch(18% 0.010 50);
+
+    --color-amber:    oklch(80% 0.120 75);
+    --color-done:     oklch(74% 0.110 150);
+    --color-done-soft:oklch(32% 0.060 150);
+    --color-danger:   oklch(70% 0.150 25);
+    --color-danger-soft: oklch(32% 0.070 25);
+    --color-focus:    oklch(75% 0.130 250);
+
+    --shadow-1: 0 1px 2px oklch(0% 0 0 / 0.30), 0 2px 8px oklch(0% 0 0 / 0.24);
+    --shadow-2: 0 6px 24px oklch(0% 0 0 / 0.40);
+  }
+}

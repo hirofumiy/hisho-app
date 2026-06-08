@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="秘書室">
+  <!-- full-bleed background for maskable safe zone -->
+  <rect width="512" height="512" fill="#f7e7e9"/>
+  <!-- sakura kept within the inner 80% safe zone -->
+  <g transform="translate(256 262) scale(0.78)">
+    <g fill="#c75b6a">
+      <g id="pm">
+        <path d="M0 -132 C 42 -100 50 -40 0 0 C -50 -40 -42 -100 0 -132 Z"/>
+      </g>
+      <use href="#pm" transform="rotate(72)"/>
+      <use href="#pm" transform="rotate(144)"/>
+      <use href="#pm" transform="rotate(216)"/>
+      <use href="#pm" transform="rotate(288)"/>
+    </g>
+    <circle r="22" fill="#a33f50"/>
+  </g>
+</svg>

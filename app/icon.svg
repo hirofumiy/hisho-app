@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="秘書室">
+  <rect width="512" height="512" rx="112" fill="#f7e7e9"/>
+  <g transform="translate(256 268)">
+    <g fill="#c75b6a">
+      <g id="p">
+        <path d="M0 -132 C 42 -100 50 -40 0 0 C -50 -40 -42 -100 0 -132 Z"/>
+      </g>
+      <use href="#p" transform="rotate(72)"/>
+      <use href="#p" transform="rotate(144)"/>
+      <use href="#p" transform="rotate(216)"/>
+      <use href="#p" transform="rotate(288)"/>
+    </g>
+    <circle r="22" fill="#a33f50"/>
+  </g>
+</svg>

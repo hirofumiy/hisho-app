@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>秘書室</title>
+  <meta name="description" content="楓のタスク台帳 — 対応した／していないをチェック" />
+
+  <!-- PWA -->
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <meta name="theme-color" content="#fbf7f3" media="(prefers-color-scheme: light)" />
+  <meta name="theme-color" content="#2a2320" media="(prefers-color-scheme: dark)" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="秘書室" />
+  <link rel="apple-touch-icon" href="./icon.svg" />
+  <link rel="icon" href="./icon.svg" type="image/svg+xml" />
+
+  <!-- fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Old+Mincho:wght@500;600&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="./app.css" />
+</head>
+<body>
+  <!-- ======= LIVE-MODE AUTH (hidden in demo) ======= -->
+  <section class="auth" id="auth" hidden>
+    <svg class="auth__mark" viewBox="0 0 64 64" aria-hidden="true"><use href="#sakura" /></svg>
+    <h1 class="auth__title">秘書室</h1>
+    <p class="auth__sub">ひろさんのGmailにログインリンクをお送りします。</p>
+    <form id="authForm">
+      <label class="field">
+        <span class="field__label">メールアドレス</span>
+        <input class="input" type="email" id="authEmail" placeholder="hirofumiy@gmail.com" autocomplete="email" required />
+      </label>
+      <button class="btn" type="submit" id="authBtn">ログインリンクを送信</button>
+    </form>
+    <p class="auth__sub" id="authMsg" style="margin-top:1rem" hidden></p>
+  </section>
+
+  <!-- ======= MAIN APP ======= -->
+  <main class="app" id="app">
+    <header class="appbar">
+      <div class="brand">
+        <svg class="brand__mark" viewBox="0 0 64 64" aria-hidden="true"><use href="#sakura" /></svg>
+        <div class="brand__text">
+          <h1 class="brand__title">秘書室</h1>
+          <div class="brand__sub">楓のタスク台帳</div>
+        </div>
+      </div>
+      <div style="display:flex;align-items:center;gap:.5rem">
+        <div class="appbar__date" id="dateLabel"><b>—</b><span>—</span></div>
+        <button class="iconbtn" id="syncBtn" aria-label="再読み込み" title="再読み込み">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="banner banner--demo" id="demoBanner" hidden>
+      <span>🌸</span>
+      <span>デモモード（Supabase未接続）。下のチェックはこの端末に保存されます。鍵を設定すると本番台帳に切り替わります。</span>
+    </div>
+    <div class="banner banner--error" id="errorBanner" hidden role="alert">
+      <span>⚠️</span>
+      <span id="errorText">データ取得に失敗しました。</span>
+    </div>
+
+    <section class="summary" aria-label="サマリー">
+      <div class="summary__stats">
+        <div class="stat stat--open"><div class="stat__num" id="statOpen">0</div><div class="stat__label">未対応</div></div>
+        <div class="stat stat--done"><div class="stat__num" id="statDone">0</div><div class="stat__label">対応済</div></div>
+        <div class="stat stat--carry"><div class="stat__num" id="statCarry">0</div><div class="stat__label">持ち越し</div></div>
+      </div>
+      <div class="progress" aria-hidden="true"><div class="progress__bar" id="progressBar"></div></div>
+    </section>
+
+    <nav class="tabs" aria-label="フィルター">
+      <input type="radio" name="filter" id="f-open" value="open" checked />
+      <label class="tab" for="f-open">未対応 <span class="tab__count" id="cnt-open">0</span></label>
+      <input type="radio" name="filter" id="f-all" value="all" />
+      <label class="tab" for="f-all">すべて <span class="tab__count" id="cnt-all">0</span></label>
+      <input type="radio" name="filter" id="f-done" value="done" />
+      <label class="tab" for="f-done">対応済 <span class="tab__count" id="cnt-done">0</span></label>
+    </nav>
+
+    <div class="groups" id="groups"><!-- rendered by JS --></div>
+
+    <div class="empty" id="empty" hidden>
+      <div class="empty__mark">🌸</div>
+      <div class="empty__text" id="emptyText">未対応はありません。お疲れさまでした。</div>
+    </div>
+
+    <footer class="foot">
+      <div>秘書室 · 楓のタスク台帳</div>
+      <div class="foot__sync" id="syncLabel"></div>
+    </footer>
+  </main>
+
+  <!-- FAB -->
+  <button class="fab" id="fab" aria-haspopup="dialog" aria-controls="sheet">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+    タスク追加
+  </button>
+
+  <!-- bottom sheet -->
+  <div class="sheet-scrim" id="scrim"></div>
+  <section class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheetTitle" aria-hidden="true">
+    <div class="sheet__grab"></div>
+    <h2 class="sheet__title" id="sheetTitle">手動タスクを追加</h2>
+    <form id="addForm">
+      <label class="field">
+        <span class="field__label">やること</span>
+        <input class="input" type="text" id="addTitle" placeholder="例：銀行・郵便局" required maxlength="120" />
+      </label>
+      <div class="field">
+        <span class="field__label">優先度</span>
+        <div class="prichoice">
+          <input type="radio" name="pri" id="pri-high" value="high" /><label for="pri-high"><span class="dot dot--high"></span>高</label>
+          <input type="radio" name="pri" id="pri-mid" value="mid" checked /><label for="pri-mid"><span class="dot dot--mid"></span>中</label>
+          <input type="radio" name="pri" id="pri-low" value="low" /><label for="pri-low"><span class="dot dot--low"></span>低</label>
+        </div>
+      </div>
+      <button class="btn" type="submit" id="addBtn">追加する</button>
+    </form>
+  </section>
+
+  <!-- toast -->
+  <div class="toast" id="toast" role="status">
+    <span id="toastText">対応済にしました</span>
+    <button class="toast__undo" id="toastUndo">取り消す</button>
+  </div>
+
+  <!-- shared svg defs -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <g id="sakura">
+        <rect x="2" y="2" width="60" height="60" rx="16" fill="var(--color-accent-soft)"/>
+        <g transform="translate(32 33)" fill="var(--color-accent)">
+          <g id="petal-group">
+            <path id="petal" d="M0 -16 C 5 -12 6 -5 0 0 C -6 -5 -5 -12 0 -16 Z"/>
+            <use href="#petal" transform="rotate(72)"/>
+            <use href="#petal" transform="rotate(144)"/>
+            <use href="#petal" transform="rotate(216)"/>
+            <use href="#petal" transform="rotate(288)"/>
+          </g>
+          <circle r="3" fill="var(--color-accent-deep)"/>
+        </g>
+      </g>
+    </defs>
+  </svg>
+
+  <script src="./config.js"></script>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
