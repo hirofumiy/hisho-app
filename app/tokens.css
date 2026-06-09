@@ -68,32 +68,10 @@
   --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
 
   --tap: 44px; /* minimum tap target */
+
+  /* OS設定に関わらず常にライト配色で表示する */
+  color-scheme: light;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-paper:    oklch(20% 0.010 50);
-    --color-paper-2:  oklch(24% 0.012 50);
-    --color-paper-3:  oklch(29% 0.014 50);
-    --color-ink:      oklch(94% 0.008 60);
-    --color-ink-2:    oklch(78% 0.010 60);
-    --color-ink-3:    oklch(64% 0.010 60);
-    --color-line:     oklch(34% 0.012 50);
-    --color-line-2:   oklch(40% 0.014 50);
-
-    --color-accent:      oklch(72% 0.125 14);
-    --color-accent-deep: oklch(80% 0.120 14);
-    --color-accent-soft: oklch(33% 0.060 14);
-    --color-on-accent:   oklch(18% 0.010 50);
-
-    --color-amber:    oklch(80% 0.120 75);
-    --color-done:     oklch(74% 0.110 150);
-    --color-done-soft:oklch(32% 0.060 150);
-    --color-danger:   oklch(70% 0.150 25);
-    --color-danger-soft: oklch(32% 0.070 25);
-    --color-focus:    oklch(75% 0.130 250);
-
-    --shadow-1: 0 1px 2px oklch(0% 0 0 / 0.30), 0 2px 8px oklch(0% 0 0 / 0.24);
-    --shadow-2: 0 6px 24px oklch(0% 0 0 / 0.40);
-  }
-}
+/* ダークモードは使わない（端末がダーク設定でも淡い白の背景で固定）。
+   端末のダーク自動変換を抑止するため color-scheme を light に固定。 */
