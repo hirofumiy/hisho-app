@@ -93,6 +93,18 @@ button { font: inherit; color: inherit; cursor: pointer; }
   display: flex; gap: var(--space-8); align-items: flex-start;
 }
 .banner--demo { background: var(--color-accent-soft); color: var(--color-accent-deep); }
+.banner__btn {
+  margin-left: var(--space-8);
+  border: 1px solid currentColor;
+  background: transparent;
+  color: inherit;
+  font-weight: 700;
+  font-size: var(--text-xs);
+  padding: var(--space-4) var(--space-12);
+  min-height: 32px;
+  border-radius: var(--radius-pill);
+}
+.banner__btn:active { transform: scale(0.96); }
 .banner--error { background: var(--color-danger-soft); color: var(--color-danger); }
 .banner[hidden] { display: none; }
 

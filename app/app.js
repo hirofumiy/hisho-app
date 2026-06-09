@@ -137,6 +137,8 @@ function render() {
   const total = tasks.length || 1;
   $("#progressBar").style.width = Math.round(done / total * 100) + "%";
 
+  updateBadge(open);
+
   // groups
   const shown = tasks.filter(visible);
   const wrap = $("#groups"); wrap.innerHTML = "";
@@ -241,6 +243,36 @@ function showError(msg) {
   setTimeout(() => { b.hidden = true; }, 6000);
 }
 
+/* ===== アプリアイコンの未対応バッジ（iOS16.4+ / ホーム画面追加時） ===== */
+function badgeReady() {
+  return ("setAppBadge" in navigator) &&
+         (typeof Notification !== "undefined") &&
+         (Notification.permission === "granted");
+}
+function updateBadge(open) {
+  if (!badgeReady()) return;
+  try { open > 0 ? navigator.setAppBadge(open) : navigator.clearAppBadge(); } catch (e) {}
+}
+function isStandalone() {
+  return (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
+         window.navigator.standalone === true;
+}
+function maybeOfferBadge() {
+  // ホーム画面追加済み & 通知未許可のときだけ「有効にする」案内を出す
+  if (!("setAppBadge" in navigator) || typeof Notification === "undefined") return;
+  if (Notification.permission !== "default") return;
+  if (!isStandalone()) return;
+  const b = $("#badgeBanner");
+  if (b) b.hidden = false;
+}
+async function enableBadge() {
+  const b = $("#badgeBanner"); if (b) b.hidden = true;
+  try {
+    const p = await Notification.requestPermission();
+    if (p === "granted") updateBadge(tasks.filter(t => t.status === "open").length);
+  } catch (e) {}
+}
+
 function openSheet() {
   $("#scrim").classList.add("is-open");
   $("#sheet").classList.add("is-open");
@@ -277,6 +309,9 @@ async function boot() {
   $$('input[name="filter"]').forEach(r => r.addEventListener("change", e => { filter = e.target.value; render(); }));
   $("#fab").addEventListener("click", openSheet);
   $("#scrim").addEventListener("click", closeSheet);
+  const badgeBtn = $("#badgeEnable");
+  if (badgeBtn) badgeBtn.addEventListener("click", enableBadge);
+  maybeOfferBadge();
   $("#addForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     const title = $("#addTitle").value.trim(); if (!title) return;
