@@ -9,8 +9,8 @@
  * 未設定（__で始まる）のうちは「デモモード」で動きます。
  */
 window.HISHO_CONFIG = {
-  SUPABASE_URL: "https://zacmkruewrtjnmvsicwj.supabase.co",
-  SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InphY21rcnVld3J0am5tdnNpY3dqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4ODE4MjgsImV4cCI6MjA5NjQ1NzgyOH0.Tu98tl3NjjWRfOwluFfK3fMOwuaDh6XiCIHyZekRHD4",
+  SUPABASE_URL: "https://ynyibgkheatayvxvhcpp.supabase.co",
+  SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InlueWliZ2toZWF0YXl2eHZoY3BwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5ODA0NTcsImV4cCI6MjA5NjU1NjQ1N30.qXVtUO3ByoY4iHmKZtqSlrWkzy8MRt3G7puViH_MzjU",
 };
 
 /* デモモードに切り替えたいとき：URL末尾に #demo を付けて開く（例 …/index.html#demo）。
