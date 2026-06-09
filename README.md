@@ -111,7 +111,7 @@ PWAは https で配信する必要がある（ホーム画面追加・Service Wo
 - デモで使い続けたいときは URL 末尾に `#demo` を付けて開く
 
 ### 接続情報
-- Supabase URL：`https://zacmkruewrtjnmvsicwj.supabase.co`
+- Supabase URL：`https://ynyibgkheatayvxvhcpp.supabase.co`
 - anonキー：`app/config.js` に配線済（公開可・RLSで保護）
 - service_roleキー：`kaede-morning-report` の GitHub Secrets（`SUPABASE_URL` / `SUPABASE_SERVICE_ROLE_KEY`）に登録済（Phase 2用）
 
