@@ -340,9 +340,22 @@ async function boot() {
   });
 }
 
-// service worker
+// service worker（新版を検知したら自動で再読込＝以後キャッシュ手動クリア不要）
 if ("serviceWorker" in navigator) {
-  window.addEventListener("load", () => navigator.serviceWorker.register("./service-worker.js").catch(() => {}));
+  let refreshing = false;
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (refreshing) return;
+    refreshing = true;
+    location.reload();
+  });
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./service-worker.js", { updateViaCache: "none" })
+      .then((reg) => {
+        reg.update();
+        setInterval(() => reg.update(), 60 * 60 * 1000); // 1時間ごとに更新確認
+      })
+      .catch(() => {});
+  });
 }
 
 boot();
