@@ -30,13 +30,17 @@
   <section class="auth" id="auth" hidden>
     <svg class="auth__mark" viewBox="0 0 64 64" aria-hidden="true"><use href="#sakura" /></svg>
     <h1 class="auth__title">秘書室</h1>
-    <p class="auth__sub">ひろさんのGmailにログインリンクをお送りします。</p>
+    <p class="auth__sub">メールアドレスとパスワードでログインしてください。一度ログインすれば、次回からは自動で開きます。</p>
     <form id="authForm">
       <label class="field">
         <span class="field__label">メールアドレス</span>
-        <input class="input" type="email" id="authEmail" placeholder="hirofumiy@gmail.com" autocomplete="email" required />
+        <input class="input" type="email" id="authEmail" placeholder="hirofumiy@gmail.com" autocomplete="username" required />
       </label>
-      <button class="btn" type="submit" id="authBtn">ログインリンクを送信</button>
+      <label class="field">
+        <span class="field__label">パスワード</span>
+        <input class="input" type="password" id="authPassword" autocomplete="current-password" required />
+      </label>
+      <button class="btn" type="submit" id="authBtn">ログイン</button>
     </form>
     <p class="auth__sub" id="authMsg" style="margin-top:1rem" hidden></p>
   </section>

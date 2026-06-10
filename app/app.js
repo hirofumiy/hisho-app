@@ -65,7 +65,14 @@ const demoStore = {
 // ---- 本番（Supabase）----
 async function liveStoreFactory() {
   const { createClient } = await import("https://esm.sh/@supabase/supabase-js@2");
-  const sb = createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY);
+  const sb = createClient(cfg.SUPABASE_URL, cfg.SUPABASE_ANON_KEY, {
+    auth: {
+      persistSession: true,       // セッションをlocalStorageに保存
+      autoRefreshToken: true,     // 期限切れ前に自動更新（＝ログイン維持）
+      detectSessionInUrl: true,
+      storage: window.localStorage,
+    },
+  });
 
   // 認証チェック（マジックリンク）
   const { data: { session } } = await sb.auth.getSession();
@@ -98,12 +105,17 @@ function showAuth(sb) {
   $("#authForm").addEventListener("submit", async (e) => {
     e.preventDefault();
     const email = $("#authEmail").value.trim();
+    const password = $("#authPassword").value;
     const btn = $("#authBtn"); btn.dataset.state = "loading";
-    const { error } = await sb.auth.signInWithOtp({ email, options: { emailRedirectTo: location.href } });
+    const { error } = await sb.auth.signInWithPassword({ email, password });
     btn.dataset.state = "";
     const msg = $("#authMsg"); msg.hidden = false;
-    msg.textContent = error ? ("送信に失敗しました：" + error.message)
-                            : "メールを送りました。届いたリンクを開いてください。";
+    if (error) {
+      msg.textContent = "ログインに失敗しました：" + error.message;
+    } else {
+      msg.textContent = "ログインしました。読み込み中…";
+      location.reload();   // 再起動で保存済みセッションからアプリ表示へ
+    }
   });
 }
 
