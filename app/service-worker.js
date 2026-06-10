@@ -2,7 +2,7 @@
  * シェルは network-first（更新を取りこぼさない）。オフライン時のみキャッシュへフォールバック。
  * Supabase API（/rest/, /auth/）と外部CDNは常にネットワーク（キャッシュしない）。
  */
-const CACHE = "hisho-shell-v4";
+const CACHE = "hisho-shell-v5";
 const SHELL = [
   "./index.html",
   "./app.css",
