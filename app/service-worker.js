@@ -2,7 +2,7 @@
  * シェルは network-first（更新を取りこぼさない）。オフライン時のみキャッシュへフォールバック。
  * Supabase API（/rest/, /auth/）と外部CDNは常にネットワーク（キャッシュしない）。
  */
-const CACHE = "hisho-shell-v5";
+const CACHE = "hisho-shell-v6";
 const SHELL = [
   "./index.html",
   "./app.css",
@@ -14,6 +14,7 @@ const SHELL = [
   "./icon-maskable.png",
   "./apple-touch-icon.png",
   "./favicon-32.png",
+  "./kaede-avatar.png",
 ];
 
 self.addEventListener("install", (e) => {
